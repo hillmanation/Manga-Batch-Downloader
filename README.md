@@ -47,9 +47,9 @@ The script accepts a list of manga URLs from a file and downloads the manga into
   "\--max-containers": The maximum number of Docker containers to run at the same time (default: 4).
 
 ## Example Usage
-    python manga-batch-downloader --export-dir /path/to/manga/downloads --manga-list /path/to/manga-list.txt --max-containers 2
+    python manga-batch-downloader --export-dir /path/to/manga/downloads --manga-list assets/manga-list.txt --max-containers 2
 
-This command will download manga into `/path/to/manga/downloads` using a list of URLs provided in `/path/to/manga-list.txt`, with up to 2 simultaneous downloads.
+This command will download manga into `/path/to/manga/downloads` using a list of URLs provided in `assets/manga-list.txt` that comes packages with this repository, with up to 2 simultaneous downloads.
 
 ## Manga List File Format
 
