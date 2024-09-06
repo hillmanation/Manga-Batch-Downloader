@@ -42,9 +42,9 @@ Documentation on mansuf's awesome tool can be found here: https://github.com/man
 The script accepts a list of manga URLs from a file and downloads the manga into a specified directory using multiple Docker containers.
 
 # Command-line Arguments
-  "\--export-dir": The local directory where the downloaded manga will be saved (required).
-  "\--manga-list": Path to a file containing a list of manga URLs (default: `assets/manga-list.txt`)
-  "\--max-containers": The maximum number of Docker containers to run at the same time (default: 4).
+- `--export-dir`: The local directory where the downloaded manga will be saved (required)  
+- `--manga-list`: Path to a file containing a list of manga URLs (default: `assets/manga-list.txt`)  
+- `--max-containers`: The maximum number of Docker containers to run at the same time (default: 4)  
 
 ## Example Usage
     python manga-batch-downloader --export-dir /path/to/manga/downloads --manga-list assets/manga-list.txt --max-containers 2
