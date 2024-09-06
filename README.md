@@ -20,7 +20,7 @@ Manga Batch Downloader is a Python script that automates the downloading of mang
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/manga-batch-downloader.git
+   git clone https://github.com/hillmanation/Manga-Batch-Downloader.git
    cd manga-batch-downloader
 
 2. Install the required Python packages:
