@@ -58,8 +58,8 @@ class MangaDownloader:
         return manga_urls
 
     def manage_containers(self):
-        # We're limiting the number of processes (containers) to 4 so we'll check to see how many containers are running
-        # here and only continue to the next url if the number of running containers is less than 4
+        # We're limiting the number of processes (containers) so we'll check to see how many containers are running
+        # here and only continue to the next url if the number of running containers is less than the max_containers
         while len(self.running_containers) >= self.max_containers:  # Check status of running containers
             time.sleep(5)  # Wait 5 seconds before checking the containers again
 
