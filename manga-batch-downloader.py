@@ -2,7 +2,7 @@ import argparse
 import subprocess
 import sys
 import docker
-from src.manga_batch_downloader import MangaDownloader
+from src.mangadex_downloader import MangaDownloader
 
 # Initialize client variable
 client = None
