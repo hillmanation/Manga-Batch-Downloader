@@ -2,7 +2,7 @@ import argparse
 import subprocess
 import sys
 import docker
-from src.mangadex_downloader import MangaDownloader
+from src.mangadex_downloader import MangadexDownloader
 
 # Initialize client variable
 client = None
@@ -47,16 +47,24 @@ def main():
 
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description="Manga Downloader Script")
-    parser.add_argument('--export-dir', type=str, required=True, help="Local directory to save downloaded manga to.")
-    parser.add_argument('--manga-list', type=str, default='assets/manga-list.txt', help="Path to manga list file, the default is included with this repository.")
-    parser.add_argument('--max-containers', type=int, default=4, help="Maximum number of simultaneous containers to spin up to run the batch downloads. Use only as many containers as you're comfortable with. And probably less than the number of cores your machine has.")
+    parser.add_argument('--export-dir', type=str, required=True, help="Local directory to save downloaded "
+                                                                      "manga to.")
+    parser.add_argument('--manga-list', type=str, default='assets/manga-list.txt',
+                        help="Path to manga list file, the default is included with this repository.")
+    parser.add_argument('--max-containers', type=int, default=4,
+                        help="Maximum number of simultaneous containers to spin up to run the batch downloads. Use "
+                             "only as many containers as you're comfortable with. And probably less than the number "
+                             "of cores your machine has.")
+    parser.add_argument('--torify-it', action='store_true',
+                        help="Anonymize the container over TOR network to hide from those that would block our WAN IP.")
     args = parser.parse_args()
 
     # Create a MangaDownloader instance with the provided export directory
-    downloader = MangaDownloader(
+    downloader = MangadexDownloader(
         manga_list_file=args.manga_list,
         export_dir=args.export_dir,
-        max_containers=args.max_containers
+        max_containers=args.max_containers,
+        torify=args.torify_it
     )
     downloader.run()
 
