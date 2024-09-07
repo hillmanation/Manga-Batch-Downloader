@@ -42,10 +42,11 @@ class MangadexDownloader:
 
             try:  # Call subprocess to start the torified container
                 print(f"Torify it: {' '.join(docker_command)}")
-                subprocess.run(docker_command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                result = subprocess.run(' '.join(docker_command), check=True, shell=True, stdout=subprocess.PIPE,
+                                        stderr=subprocess.PIPE)
                 print(
                     f"Started container '{instance_name}' with torsocks: {self.torify_it} @ "
-                    f"{datetime.now().strftime('%H:%M:%S')}")
+                    f"{datetime.now().strftime('%H:%M:%S')} with ID: {result.stdout.decode()}")
                 return instance_name
             except subprocess.CalledProcessError as e:
                 print(f"Error starting container '{instance_name}' with torsocks: {e.stderr.decode()}")
