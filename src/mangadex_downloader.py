@@ -24,7 +24,7 @@ class MangaDownloader:
         self.volume_mapping = export_dir
         self.max_containers = max_containers
         self.running_containers = []
-        self.defaults = "--no-group-name --use-chapter-title --delay-requests 1.5"
+        self.defaults = "--no-group-name --use-chapter-title --delay-requests 1.5 --save-as 'cbz'"
 
     # Start download container instance
     def start_download(self, instance_name, command_args):
