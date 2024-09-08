@@ -46,7 +46,7 @@ def check_for_container(container):
     try:
         # Check to see if the torproxy image is running
         result = subprocess.run(["docker", "ps", "-a"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if container in result.stdout:
+        if container in result.stdout.decode():
             print(f"Confirmed container {container} running...")
             return True
         else:
