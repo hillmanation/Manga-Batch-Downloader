@@ -45,7 +45,7 @@ def check_and_pull_images(image_names):
 def check_for_container(container):
     try:
         # Check to see if the torproxy image is running
-        result = subprocess.run(["docker", "ps -a"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        result = subprocess.run(["docker", "ps", "-a"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if container in result.stdout:
             print(f"Confirmed container {container} running...")
             return True
@@ -109,7 +109,7 @@ def main():
                 start_container("dperson/torproxy", "tor_proxy", "--network tor -p9050:9050")
             else:
                 print(f"Creating tor container network...")
-                subprocess.run(["docker", "network create tor"], check=True, stdout=subprocess.PIPE,
+                subprocess.run(["docker", "network", "create", "tor"], check=True, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
                 print(f"Tor container network created, starting torproxy on Tor network...")
                 start_container("dperson/torproxy", "tor_proxy", "--network tor -p9050:9050")
