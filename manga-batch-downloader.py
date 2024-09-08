@@ -10,7 +10,7 @@ client = None
 
 def check_for_docker():
     # Check if Docker is installed and running/enabled
-    global client  # GLobal variable to intitialize Docker client for later image check
+    global client  # Global variable to initialize Docker client for later image check
     try:
         # Check if docker is installed first
         subprocess.run(["docker", "--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -23,6 +23,7 @@ def check_for_docker():
         sys.exit(1)
 
 
+# noinspection PyUnresolvedReferences
 def check_and_pull_image(image_name):
     # Check if the proper Docker image is available, and if not pull it
     try:

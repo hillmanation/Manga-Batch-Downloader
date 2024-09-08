@@ -41,7 +41,7 @@ class MangadexDownloader:
             ] + command_args.split()  # Append the url and default arguments from {self.defaults}
 
             try:  # Call subprocess to start the torified container
-                print(f"Torify it: {' '.join(docker_command)}")
+                print(f"Torify it: Starting download of {instance_name}")
                 result = subprocess.run(' '.join(docker_command), check=True, shell=True, stdout=subprocess.PIPE,
                                         stderr=subprocess.PIPE)  # Use a shell for the subprocess so this actually works
                 print(
