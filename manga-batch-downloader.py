@@ -112,7 +112,7 @@ def main():
                 subprocess.run(["docker", "network", "create", "tor"], check=True, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
                 print(f"Tor container network created, starting torproxy on Tor network...")
-                start_container("dperson/torproxy", "tor_proxy", "--network tor -p9050:9050")
+                start_container("dperson/torproxy", "tor_proxy", "--network 'tor -p9050:9050'")
         except subprocess.CalledProcessError as e:
             print(f"Error: {str(e)} please manually create these before proceeding with tor proxy download settings...")
             sys.exit(0)
