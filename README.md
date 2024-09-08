@@ -9,11 +9,11 @@ Manga Batch Downloader is a Python script that automates the downloading of mang
 - Supports batch downloading from a list of URLs.
 - Automatically checks if Docker is installed, running, and whether the required Docker image is available.
 - Ensures proper management of container instances, limiting the number of simultaneous downloads to a specified amount.
-- Added ability to torify containers to anonymize downloads with torsocks.
+- Added ability to Torify containers to anonymize downloads with Torsocks.
 
 ## Prerequisites
 
-- **Docker**: Make sure the latest verison of Docker is installed and running on your system.
+- **Docker**: Make sure the latest version of Docker is installed and running on your system.
 - **Python 3.9**: The script is built using Python 3.9.
 - **TOR and Torsocks (Optional)**: If you wish to anonymize downloads with TOR, install tor and torsocks prior to running.
 
@@ -43,6 +43,7 @@ Manga Batch Downloader is a Python script that automates the downloading of mang
 Documentation on mansuf's awesome tool can be found here: https://github.com/mansuf/mangadex-downloader
     ```bash
     docker pull mansuf/mangadex-downloader
+   ```
 
 ### Install TOR and Torsocks (Optional for Anonymous downloads)
 
@@ -89,6 +90,8 @@ $ curl https://api.ipify.org?format=json
 {"ip":"192.160.102.164"} # This returns an anonymized WAN address that has been anonymized/proxified using the TOR net
 ```
 
+###### _The Torsocks repository is maintained by The Tor Project [here](https://gitlab.torproject.org/tpo/core/torsocks/)._
+
 # Usage
 
 The script accepts a list of manga URLs from a file and downloads the manga into a specified directory using multiple Docker containers.
@@ -100,15 +103,16 @@ The script accepts a list of manga URLs from a file and downloads the manga into
 - `--torify-it`: Run the containers through the TOR network using the Torsock wrapper (default: `false`)
 
 ## Example Usage
+Run the below from the directory this repository is stored:
    ```bash
-   python manga-batch-downloader --export-dir /path/to/manga/downloads --manga-list assets/manga-list.txt --max-containers 2
+   python manga-batch-downloader.py --export-dir /path/to/manga/downloads --manga-list assets/manga-list.txt --max-containers 2
    ```
 
 This command will download manga into `/path/to/manga/downloads` using a list of URLs provided in `assets/manga-list.txt` that comes packages with this repository, with up to 2 simultaneous downloads.
 
 ## Example Using TOR
    ```bash
-   python manga-batch-downloader --export-dir /path/to/manga/downloads --manga-list assets/manga-list.txt --max-containers 6 --torify-it
+   python manga-batch-downloader.py --export-dir /path/to/manga/downloads --manga-list assets/manga-list.txt --max-containers 6 --torify-it
    ```
 This command will do the same as the above command, with up to 6 simultaneous downloads, all anonymized through TOR.
 
