@@ -106,7 +106,7 @@ def main():
                                        stderr=subprocess.PIPE)
             if "tor" in net_check.stdout.decode():
                 print(f"Tor container network exists, starting torproxy on Tor network...")
-                start_container("dperson/torproxy", "tor_proxy", "--network tor -p9050:9050")
+                start_container("dperson/torproxy", "tor_proxy", "--network 'tor -p9050:9050'")
             else:
                 print(f"Creating tor container network...")
                 subprocess.run(["docker", "network", "create", "tor"], check=True, stdout=subprocess.PIPE,
