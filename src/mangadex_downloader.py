@@ -1,5 +1,4 @@
 import docker
-import subprocess
 import time
 import re
 from datetime import datetime
@@ -30,45 +29,22 @@ class MangadexDownloader:
 
     # Start download container instance
     def start_download(self, instance_name, command_args):
-        if self.torify_it:  # If torify is requested we have to start the container with subprocess
-            docker_command = [  # Build the command line arguments
-                "torsocks", "docker", "run",  # Run docker with the torsocks wrapper
-                "--detach",
-                "--name", instance_name,
-                "--volume", f"{self.volume_mapping}:/downloads:rw",
-                "--rm",
-                "mansuf/mangadex-downloader"
-            ] + command_args.split()  # Append the url and default arguments from {self.defaults}
-
-            try:  # Call subprocess to start the torified container
-                print(f"Torify it: Starting download of {instance_name}")
-                result = subprocess.run(' '.join(docker_command), check=True, shell=True, stdout=subprocess.PIPE,
-                                        stderr=subprocess.PIPE)  # Use a shell for the subprocess so this actually works
-                print(
-                    f"Started container '{instance_name}' with torsocks: {self.torify_it} @ "
-                    f"{datetime.now().strftime('%H:%M:%S')} with ID: {result.stdout.decode()}")
-                return instance_name
-            except subprocess.CalledProcessError as e:
-                print(f"Error starting container '{instance_name}' with torsocks: {e.stderr.decode()}")
-                return None
-        else:
-            # Start a Docker container for downloading manga from a url without torify using python module method
-            try:
-                download_client = self.client.containers.run(
-                    "mansuf/mangadex-downloader",  # Docker Image name
-                    detach=True,  # Run in detached mode
-                    name=instance_name,  # Name of Container instance
-                    volumes={self.volume_mapping: {"bind": "/downloads", "mode": "rw"}},  # Local volume mapping
-                    remove=True,  # Remove after container process stops
-                    command=command_args
-                )
-                print(
-                    f"Started container '{instance_name}' @ {datetime.now().strftime('%H:%M:%S')} with ID: "
-                    f"{download_client.id}")
-                return instance_name  # Return for tracking
-            except docker.errors.APIError as e:
-                print(f"Error starting container '{instance_name}': {str(e)}")
-                return None
+        try:
+            download_client = self.client.containers.run(
+                "hillmanation/mangadex-downloader-tor",  # Docker Image name
+                detach=True,  # Run in detached mode
+                name=instance_name,  # Name of Container instance
+                volumes={self.volume_mapping: {"bind": "/downloads", "mode": "rw"}},  # Local volume mapping
+                remove=True,  # Remove after container process stops
+                command=command_args
+            )
+            print(
+                f"Started container '{instance_name}' @ {datetime.now().strftime('%H:%M:%S')} with ID: "
+                f"{download_client.id}")
+            return instance_name  # Return for tracking
+        except docker.errors.APIError as e:
+            print(f"Error starting container '{instance_name}': {str(e)}")
+            return None
 
     # Read in list of manga from a file
     def read_manga_list(self):
@@ -111,6 +87,8 @@ class MangadexDownloader:
         for manga_url in manga_list:
             container_name = valid_container_name(manga_url)
             command_args = f"{manga_url} {self.defaults}"
+            if self.torify_it:  # If proxy is requested add that setting here
+                command_args = f"{command_args} {self.torify_it}"
 
             name = self.start_download(container_name, command_args)
             if name:
