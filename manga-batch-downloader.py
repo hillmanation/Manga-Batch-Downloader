@@ -102,7 +102,7 @@ def main():
     # If proxy is requested and torproxy is not running let's configure the tor network and start it
     if args.torify_it and not check_for_container("dperson/torproxy"):
         try:
-            net_check = subprocess.run(["docker", "network ls"], check=True, stdout=subprocess.PIPE,
+            net_check = subprocess.run(["docker", "network", "ls"], check=True, stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE)
             if "tor" in net_check:
                 print(f"Tor container network exists, starting torproxy on Tor network...")
