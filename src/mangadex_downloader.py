@@ -88,7 +88,7 @@ class MangadexDownloader:
             container_name = valid_container_name(manga_url)
             command_args = f"{manga_url} {self.defaults}"
             if self.torify_it is not None:  # If proxy is requested add that setting here
-                command_args = f"{command_args} {self.torify_it}"
+                command_args = f"{command_args} --proxy '{self.torify_it}'"
 
             name = self.start_download(container_name, command_args)
             if name:
