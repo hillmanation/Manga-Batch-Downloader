@@ -11,7 +11,7 @@ MAX_CON=6
 echo "[$(date)] Starting manga batch download process" >> $LOG_FILE
 
 # Update the Manga Downloader repository
-if $SCRIPT_DIR/pull_Manga-Batch-Downloader.sh; then
+if $SCRIPT_DIR/Manga-Batch-Downloader/scripts/pull_Manga-Batch-Downloader.sh; then
         echo "[$(date)] Manga-Batch-Downloader repo updated" >> $LOG_FILE
 fi
 
