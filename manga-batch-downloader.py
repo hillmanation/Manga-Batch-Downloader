@@ -99,7 +99,7 @@ def main():
                              "of cores your machine has.")
     parser.add_argument('--torify-it', type=str, default=None,
                         help="Anonymize the container over TOR network to hide from those that would block our WAN IP.")
-    parser.add_argument('--debug', action='start_true')
+    parser.add_argument('--debug', action='store_true')
     args = parser.parse_args()
 
     # If proxy is requested and torproxy is not running let's configure the tor network and start it
