@@ -25,7 +25,7 @@ class MangadexDownloader:
         self.max_containers = max_containers
         self.torify_it = torify  # option to enable running the containers over torsocks
         self.running_containers = []
-        self.debug = debug,
+        self.debug = debug
         self.defaults = "--no-group-name --use-chapter-title --delay-requests 1.5 --save-as 'cbz'"
 
     # Start download container instance
