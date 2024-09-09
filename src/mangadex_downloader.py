@@ -17,7 +17,7 @@ def valid_container_name(url):
 
 
 class MangadexDownloader:
-    def __init__(self, manga_list_file, export_dir, max_containers, torify):
+    def __init__(self, manga_list_file, export_dir, max_containers, torify, debug):
         # Initialize Docker client
         self.client = docker.from_env()
         self.manga_list_file = manga_list_file
@@ -25,6 +25,7 @@ class MangadexDownloader:
         self.max_containers = max_containers
         self.torify_it = torify  # option to enable running the containers over torsocks
         self.running_containers = []
+        self.debug = debug,
         self.defaults = "--no-group-name --use-chapter-title --delay-requests 1.5 --save-as 'cbz'"
 
     # Start download container instance
@@ -88,6 +89,8 @@ class MangadexDownloader:
         for manga_url in manga_list:
             container_name = valid_container_name(manga_url)
             command_args = f"{manga_url} {self.defaults}"
+            if self.debug:
+                command_args = f"{command_args} --log-level=DEBUG"
             if self.torify_it is not None:  # If proxy is requested add that setting here
                 command_args = f"{command_args} --proxy '{self.torify_it}'"
 

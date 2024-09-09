@@ -99,6 +99,7 @@ def main():
                              "of cores your machine has.")
     parser.add_argument('--torify-it', type=str, default=None,
                         help="Anonymize the container over TOR network to hide from those that would block our WAN IP.")
+    parser.add_argument('--debug', action='start_true')
     args = parser.parse_args()
 
     # If proxy is requested and torproxy is not running let's configure the tor network and start it
@@ -124,7 +125,8 @@ def main():
         manga_list_file=args.manga_list,
         export_dir=args.export_dir,
         max_containers=args.max_containers,
-        torify=args.torify_it
+        torify=args.torify_it,
+        debug=args.debug
     )
     downloader.run()
 
