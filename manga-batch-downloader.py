@@ -83,7 +83,7 @@ def main():
     check_for_docker()
 
     # Gather a list of docker images we need to run the tool
-    required_images = ["hillmanation/mangadex-downloader-tor", "hillmanation/torproxy"]
+    required_images = ["hillmanation/mangadex-downloader-tor", "dperson/torproxy"]
 
     # Check for the image we need and pull it down if we don't have it
     check_and_pull_images(required_images)
@@ -103,7 +103,7 @@ def main():
     args = parser.parse_args()
 
     # If proxy is requested and torproxy is not running let's configure the tor network and start it
-    if args.torify_it and not check_for_container("hillmanation/torproxy"):
+    if args.torify_it and not check_for_container("dperson/torproxy"):
         try:
             net_check = subprocess.run(["docker", "network", "ls"], check=True, stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE)
@@ -112,10 +112,10 @@ def main():
                 subprocess.run(["docker", "network", "create", "tor"], check=True, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
                 print(f"Tor container network created, starting torproxy on Tor network...")
-                start_container("hillmanation/torproxy", "tor_proxy")
+                start_container("dperson/torproxy", "tor_proxy")
             else:
                 print(f"Tor container network exists, starting torproxy on Tor network...")
-                start_container("hillmanation/torproxy", "tor_proxy")
+                start_container("dperson/torproxy", "tor_proxy")
         except subprocess.CalledProcessError as e:
             print(f"Error: {str(e)} please manually create these before proceeding with tor proxy download settings...")
             sys.exit(0)

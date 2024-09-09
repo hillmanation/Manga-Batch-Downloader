@@ -1,9 +1,9 @@
 #!/bin/sh
 
 SCRIPT_DIR="/root/manga-scripts"
-DOWNLOADS="/sauce/manga"
+DOWNLOADS="/sauce/manga_cbz"
 LOG_FILE="/var/log/manga_downloader.log"
-MANGA_FILE="assets/manga_list_test.txt"
+MANGA_FILE="assets/manga_list.txt"
 TOR_PROXY="socks5h://172.21.0.2:9050"
 MAX_CON=6
 
@@ -19,10 +19,10 @@ fi
 cd $SCRIPT_DIR/Manga-Batch-Downloader || { echo "[$(date)] Failed to navigate to $SCRIPT_DIR/Manga-Batch-Downloader\nDoes this directory exist?" >> $LOG_FILE; exit 1; }
 
 # Log the Docker run command for verification
-echo "[$(date)] Running command: python3 manga-batch-downloader.py --export-dir $DOWNLOADS --manga-list $MANGA_FILE --max-containers $MAX_CON --torify-it $TOR_PROXY" >> $LOG_FILE
+echo "[$(date)] Running command: python3 manga-batch-downloader.py --export-dir $DOWNLOADS --manga-list $MANGA_FILE --max-containers $MAX_CON" >> $LOG_FILE
 
 # Run the batch download script
-if python3 manga-batch-downloader.py --export-dir $DOWNLOADS --manga-list $MANGA_FILE --max-containers $MAX_CON --torify-it $TOR_PROXY; then
+if python3 manga-batch-downloader.py --export-dir $DOWNLOADS --manga-list $MANGA_FILE --max-containers $MAX_CON; then
         echo "[$(date)] Started the batch download tasks..." >> $LOG_FILE
 else
         echo "[$(date)] Failed to start the manga batch download process..." >> $LOG_FILE
