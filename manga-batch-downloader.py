@@ -58,13 +58,15 @@ def check_for_container(container):
 
 
 # noinspection PyUnresolvedReferences
-def start_container(container, container_name, container_args):
+def start_container(container, container_name, container_args=None):
     try:
         container_start = download_client = client.containers.run(
                 container,  # Docker Image name
                 detach=True,  # Run in detached mode
                 name=container_name,  # Name of Container instance
                 remove=True,  # Remove after container process stops
+                network="tor" if container_name == "tor_proxy" else None,  # For when we're making tor_proxy
+                ports={'9050/tcp': 9050} if container_name == "tor_proxy" else None,  # Same as above
                 command=container_args
         )
         print(
@@ -104,15 +106,15 @@ def main():
         try:
             net_check = subprocess.run(["docker", "network", "ls"], check=True, stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE)
-            if "tor" in net_check.stdout.decode():
-                print(f"Tor container network exists, starting torproxy on Tor network...")
-                start_container("dperson/torproxy", "tor_proxy", "--network 'tor -p9050:9050'")
-            else:
+            if "tor" not in net_check.stdout.decode():  # Check for tor container network first
                 print(f"Creating tor container network...")
                 subprocess.run(["docker", "network", "create", "tor"], check=True, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
                 print(f"Tor container network created, starting torproxy on Tor network...")
-                start_container("dperson/torproxy", "tor_proxy", "--network 'tor -p9050:9050'")
+                start_container("dperson/torproxy", "tor_proxy")
+            else:
+                print(f"Tor container network exists, starting torproxy on Tor network...")
+                start_container("dperson/torproxy", "tor_proxy")
         except subprocess.CalledProcessError as e:
             print(f"Error: {str(e)} please manually create these before proceeding with tor proxy download settings...")
             sys.exit(0)

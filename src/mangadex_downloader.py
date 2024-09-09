@@ -35,6 +35,7 @@ class MangadexDownloader:
                 detach=True,  # Run in detached mode
                 name=instance_name,  # Name of Container instance
                 volumes={self.volume_mapping: {"bind": "/downloads", "mode": "rw"}},  # Local volume mapping
+                network="tor" if self.torify_it else None,  # Set the network to 'tor' if we are using a proxy
                 remove=True,  # Remove after container process stops
                 command=command_args
             )
@@ -88,7 +89,7 @@ class MangadexDownloader:
             container_name = valid_container_name(manga_url)
             command_args = f"{manga_url} {self.defaults}"
             if self.torify_it is not None:  # If proxy is requested add that setting here
-                command_args = f"{command_args} --proxy '{self.torify_it}' --network 'tor'"
+                command_args = f"{command_args} --proxy '{self.torify_it}'"
 
             name = self.start_download(container_name, command_args)
             if name:
