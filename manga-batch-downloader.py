@@ -97,8 +97,8 @@ def main():
                         help="Maximum number of simultaneous containers to spin up to run the batch downloads. Use "
                              "only as many containers as you're comfortable with. And probably less than the number "
                              "of cores your machine has.")
-    parser.add_argument('--torify-it', type=str, default=None,
-                        help="Anonymize the container over TOR network to hide from those that would block our WAN IP.")
+    parser.add_argument('--torify-it', type=str, help="(Currently Disabled) Anonymize the container over "
+                                                      "TOR network to hide from those that would block our WAN IP.")
     parser.add_argument('--debug', action='store_true')
     args = parser.parse_args()
 
