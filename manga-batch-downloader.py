@@ -83,7 +83,7 @@ def main():
     check_for_docker()
 
     # Gather a list of docker images we need to run the tool
-    required_images = ["hillmanation/mangadex-downloader-tor", "dperson/torproxy"]
+    required_images = ["mansuf/mangadex-downloader"]  # , "dperson/torproxy"] <-- Not currently needed
 
     # Check for the image we need and pull it down if we don't have it
     check_and_pull_images(required_images)
