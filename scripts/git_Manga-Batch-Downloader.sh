@@ -34,6 +34,9 @@ if [ -f "$STAGING_FILE" ]; then
           continue
       fi
 
+      # Strip newlines and whitespace
+      manga_url=$(printf "%s" "$manga_url" | tr -d '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
       # Check if the manga_url already exists in manga_list.txt
       if ! grep -Fxq "$manga_url" "$MANGA_LIST_FILE"; then
           echo "[$(date)] Adding $manga_url to the manga list." >> $LOG_FILE
