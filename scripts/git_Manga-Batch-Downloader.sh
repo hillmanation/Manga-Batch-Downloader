@@ -9,7 +9,7 @@ LOG_FILE="/var/log/manga_downloader.log"
 # Function to remove the staging file
 remove_staging_file() {
     if [ -f "$STAGING_FILE" ]; then
-        rm "$STAGING_FILE" -y && echo "[$(date)] Removed $STAGING_FILE." >> "$LOG_FILE"
+        chown root:root "$STAGING_FILE" && rm "$STAGING_FILE" -y && echo "[$(date)] Removed $STAGING_FILE." >> "$LOG_FILE"
     else
         echo "[$(date)] $STAGING_FILE not found, nothing to remove." >> "$LOG_FILE"
     fi
@@ -21,9 +21,6 @@ cd $REPO_DIR || { echo "[$(date)] Repository not found" >> $LOG_FILE; exit 1; }
 # Fetch the latest changes from the repository
 echo "[$(date)] Fetching changes from GitHub..." >> $LOG_FILE
 git pull origin main || { echo "[$(date)] Git pull failed" >> $LOG_FILE; exit 1; }
-
-# Ensure script files have execute permissions
-chmod +x "$REPO_DIR/scripts/git_Manga_Batch-Downloader.sh" "$REPO_DIR/scripts/update_manga_libraries.sh" || { echo "[$(date)] Failed to set execute permissions on scripts" >> $LOG_FILE; }
 
 # Install/Update Python dependencies
 if [ -f "requirements.txt" ]; then
