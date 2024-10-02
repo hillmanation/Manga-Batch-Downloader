@@ -19,7 +19,7 @@ remove_staging_file() {
 cd $REPO_DIR || { echo "[$(date)] Repository not found" >> $LOG_FILE; exit 1; }
 
 # Fetch the latest changes from the repository
-echo "[$(date)] Fetching changes from GitHub... >> $LOG_FILE"
+echo "[$(date)] Fetching changes from GitHub..." >> $LOG_FILE
 git pull origin main || { echo "[$(date)] Git pull failed" >> $LOG_FILE; exit 1; }
 
 # Ensure script files have execute permissions
