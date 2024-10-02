@@ -9,7 +9,7 @@ LOG_FILE="/var/log/manga_downloader.log"
 # Function to remove the staging file
 remove_staging_file() {
     if [ -f "$STAGING_FILE" ]; then
-        rm "$STAGING_FILE" -y && echo "[$(date)] Removed $STAGING_FILE." >> "$LOG_FILE"
+        rm "$STAGING_FILE" && echo "[$(date)] Removed $STAGING_FILE." >> "$LOG_FILE"
     else
         echo "[$(date)] $STAGING_FILE not found, nothing to remove." >> "$LOG_FILE"
     fi
@@ -63,6 +63,7 @@ if [ -f "$STAGING_FILE" ]; then
       if git push origin main; then
           echo "[$(date)] Repository updated successfully." >> $LOG_FILE
           # Remove the staging file after successful repo update
+          echo "[$(date)] Calling remove_staging_file..." >> "$LOG_FILE"
           remove_staging_file
       else
           echo "[$(date)] Git push failed after successful commit." >> $LOG_FILE
