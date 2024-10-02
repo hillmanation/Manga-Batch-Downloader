@@ -6,12 +6,24 @@ STAGING_FILE="/sauce/manga_staging_list.txt"
 MANGA_LIST_FILE="$REPO_DIR/assets/manga_list.txt"
 LOG_FILE="/var/log/manga_downloader.log"
 
+# Function to remove the staging file
+remove_staging_file() {
+    if [ -f "$STAGING_FILE" ]; then
+        rm "$STAGING_FILE" -y && echo "[$(date)] Removed $STAGING_FILE." >> "$LOG_FILE"
+    else
+        echo "[$(date)] $STAGING_FILE not found, nothing to remove." >> "$LOG_FILE"
+    fi
+}
+
 # Navigate to REPO_DIR
 cd $REPO_DIR || { echo "[$(date)] Repository not found" >> $LOG_FILE; exit 1; }
 
 # Fetch the latest changes from the repository
 echo "[$(date)] Fetching changes from GitHub... >> $LOG_FILE"
 git pull origin main || { echo "[$(date)] Git pull failed" >> $LOG_FILE; exit 1; }
+
+# Ensure script files have execute permissions
+chmod +x "$REPO_DIR/scripts/git_Manga_Batch-Downloader.sh" "$REPO_DIR/scripts/update_manga_libraries.sh" || { echo "[$(date)] Failed to set execute permissions on scripts" >> $LOG_FILE; }
 
 # Install/Update Python dependencies
 if [ -f "requirements.txt" ]; then
@@ -53,6 +65,8 @@ if [ -f "$STAGING_FILE" ]; then
       echo "[$(date)] Commit successful, pushing changes to GitHub..." >> $LOG_FILE
       if git push origin main; then
           echo "[$(date)] Repository updated successfully." >> $LOG_FILE
+          # Remove the staging file after successful repo update
+          remove_staging_file
       else
           echo "[$(date)] Git push failed after successful commit." >> $LOG_FILE
       fi
