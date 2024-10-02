@@ -9,7 +9,7 @@ LOG_FILE="/var/log/manga_downloader.log"
 # Function to remove the staging file
 remove_staging_file() {
     if [ -f "$STAGING_FILE" ]; then
-        chown root:root "$STAGING_FILE" && rm "$STAGING_FILE" -y && echo "[$(date)] Removed $STAGING_FILE." >> "$LOG_FILE"
+        rm "$STAGING_FILE" -y && echo "[$(date)] Removed $STAGING_FILE." >> "$LOG_FILE"
     else
         echo "[$(date)] $STAGING_FILE not found, nothing to remove." >> "$LOG_FILE"
     fi
