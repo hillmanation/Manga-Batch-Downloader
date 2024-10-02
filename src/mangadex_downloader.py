@@ -32,7 +32,7 @@ class MangadexDownloader:
     def start_download(self, instance_name, command_args):
         try:
             download_client = self.client.containers.run(
-                "hillmanation/mangadex-downloader-tor",  # Docker Image name
+                "mansuf/mangadex-downloader",  # Docker Image name
                 detach=True,  # Run in detached mode
                 name=instance_name,  # Name of Container instance
                 volumes={self.volume_mapping: {"bind": "/downloads", "mode": "rw"}},  # Local volume mapping
