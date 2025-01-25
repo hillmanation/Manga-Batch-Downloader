@@ -51,7 +51,7 @@ if [ -f "$STAGING_FILE" ]; then
       if ! grep -Fxq "$manga_url" "$MANGA_LIST_FILE"; then
           echo "[$(date)] Prepending $manga_url to the manga list." >> $LOG_FILE
           # Prepend the new URL by writing it to a temp file, then appending the old list
-          echo "$manga_url" | cat - "$MANGA_LIST_FILE" > TEMP_FILE && mv TEMP_FILE "$MANGA_LIST_FILE"
+          echo "$manga_url" | cat - "$MANGA_LIST_FILE" > "$TEMP_FILE" && mv "$TEMP_FILE" "$MANGA_LIST_FILE"
       else
           echo "[$(date)] $manga_url is already in the manga list, skipping." >> $LOG_FILE
       fi
